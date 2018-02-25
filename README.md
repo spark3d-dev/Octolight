@@ -63,6 +63,11 @@ toolHeatingBrightness    = 100;		// brightness
   * ArduinoJson.h
   * Adafruit_NeoPixel.h
 
+## Troubleshooting
+
+  * LED flashing RED 5 times = WiFi Connection failed
+  * LED fast flashing ORANGE 15 times = API Connection failed
+
 
 
 

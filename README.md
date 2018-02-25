@@ -68,11 +68,3 @@ toolHeatingBrightness    = 100;		// brightness
   * LED flashing RED 5 times = WiFi Connection failed
   * LED fast flashing ORANGE 15 times = API Connection failed
 
-
-
-
-```sh
-git clone https://username@github.com/CFMmedia/ramp.git
-npm install
-npm update
-```

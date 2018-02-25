@@ -27,26 +27,34 @@ The default colors can also be modified in the settings file.
 * Let the show begin
 
 
-## Settings
+## Settings.h
 
-  * OCTOPRINT REST API
-	```sh
-	const char* octo_api_key    = "enterOctoprintApiKeyHere";
-	String octo_ip_adr          = "enterOctoprintIpAdressHere";
-	```
+* OCTOPRINT REST API
+```sh
+octo_api_key    = "enterOctoprintApiKeyHere";
+octo_ip_adr     = "enterOctoprintIpAdressHere";
+```
 
-	* WLAN
-	```sh
-	String wlanSSID             = "enterYourSSIDHere";
-	String wlanPASS             = "enterYourPasswordHere";
-	const char* Hostname        = "enterYourHostnameHere";
-	```
+* WLAN
+```sh
+wlanSSID        = "enterYourSSIDHere";
+wlanPASS        = "enterYourPasswordHere";
+Hostname        = "enterYourHostnameHere";
+```
 
-	* LED
-	```sh
-	LED_PIN D8
-	LED_PIXEL 6
-	```
+* LED
+```sh
+LED_PIN D8
+LED_PIXEL 6
+```
+
+* LED Settings
+```sh
+toolHeatingR             = 255;		// red (0-255)
+toolHeatingG             = 55;		// green (0-255)
+toolHeatingB             = 0;		// blue (0-255)
+toolHeatingBrightness    = 100;		// brightness
+```
 
 ## Libraries
 

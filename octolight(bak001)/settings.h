@@ -1,18 +1,22 @@
 // LED
 // ====================================================================
-#define LED_PIN D8
-#define LED_PIXEL 6
+#define LED_PIN D7
+#define LED_PIXEL 16
+
+#define LED_PIN_STATUS D8
+#define LED_PIXEL_STATUS 16
 
 // OCTOPRINT
 // ====================================================================
-const char* octo_api_key    = "enterOctoprintApiKeyHere";
-String octo_ip_adr          = "enterOctoprintIpAdressHere";
+const char* octo_api_key    = "D0C9672D4D114AAC8EDAD9AC13DEBA63";
+//String octo_ip_adr          = "qncontrol.kuhnsches.de:5555";
+String octo_ip_adr          = "192.168.1.66";
 
 // WLAN
 // ====================================================================
-String wlanSSID             = "enterYourSSIDHere";
-String wlanPASS             = "enterYourPasswordHere";
-const char* hostname        = "enterYourHostnameHere";
+String wlanSSID             = "Kuhnsches";
+String wlanPASS             = "G3h3im1744";
+const char* wlanHostname    = "OctoprintESP";
 
 // UPDATE
 // ====================================================================

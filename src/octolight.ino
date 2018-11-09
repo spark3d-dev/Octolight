@@ -22,6 +22,9 @@ Adafruit_NeoPixel statusPixels = Adafruit_NeoPixel(LED_PIXEL_STATUS, LED_PIN_STA
 // ====================================================================
 bool printingState;
 int printerProgress;
+int timeNow;
+int timeLeft;
+const char* filename;
 double bedActual;
 double bedTarget;
 double toolActual;
@@ -40,18 +43,13 @@ void setup() {
   // Serial
   Serial.begin(115200);
 
-
-      // Status
-	  	delay(5000);
-      Status status;
-      status.bootscreen();
-  Serial.println("delay start");
-  	delay(10000);
-
-
   // pixels begin
   pixels.begin();
   pixels.show();
+
+    	// Status
+    	Status status;
+    	status.bootscreen();
 
   // statusPixels begin
   statusPixels.begin();
@@ -75,6 +73,8 @@ void setup() {
   }
 
 
+
+
 }
 
 
@@ -87,78 +87,92 @@ void setup() {
 // ====================================================================
 void loop() {
 
+	Serial.println("loop");
 
-  // connection
-  if (WiFi.status() == WL_CONNECTED) {
+	pixels.setPixelColor(0, pixels.Color(155,155,155));
+	pixels.setPixelColor(1, pixels.Color(0,155,0));
+	pixels.show();
 
-    // update printer status
-    Serial.print("Request Printer Status...");
-    getPrinter();
+
+	getPrinter();
     getPrinterJob();
 
+	Status status;
+	status.actStatus( timeNow, timeLeft, printerProgress, filename, bedActual, toolActual );
 
-    // api success
-    if( apiStatus ) {
+	delay(10000);
 
-      // check printing state
-      if( printingState == false ) {
-
-        Serial.println( "" );
-        Serial.println( "======  STATUS   ======" );
-        Serial.println( "Status: Printer ready!" );
-
-        // led
-        ledRGB(0,255,0,100);
-
-        // update interval
-        updateInterval = updateIntervalReady;
-
-      } else {
-
-
-        Serial.println( "" );
-        Serial.println( "====== TEMP INFO ======" );
-
-        // bed
-        Serial.print("bedActual: ");
-        Serial.println( bedActual );
-        Serial.print("bedTarget: ");
-        Serial.println( bedTarget );
-
-        Serial.println( "" );
-
-        // tool
-        Serial.print("toolActual: ");
-        Serial.println( toolActual );
-        Serial.print("toolTarget: ");
-        Serial.println( toolTarget );
-        Serial.println( "====== TEMP INFO ======" );
-        Serial.println( "" );
-
-        checkPrinterState();
-      }
-
-    }
-
-
-
-
-  }
-  // restart
-  else {
-    ESP.restart();
-  }
-
-        ledStatus( printerProgress );
-
-  // delay requests
-  Serial.println( "" );
-  Serial.print( "Next update in: " );
-  Serial.print( updateInterval / 1000 );
-  Serial.println( "s" );
-  Serial.println( "===================================" );
-  Serial.println("");
-  delay( updateInterval );
+  // // connection
+  // if (WiFi.status() == WL_CONNECTED) {
+  //
+  //   // update printer status
+  //   Serial.print("Request Printer Status...");
+  //   getPrinter();
+  //   getPrinterJob();
+  //
+  //
+  //   // api success
+  //   if( apiStatus ) {
+  //
+  //     // check printing state
+  //     if( printingState == false ) {
+  //
+  //       Serial.println( "" );
+  //       Serial.println( "======  STATUS   ======" );
+  //       Serial.println( "Status: Printer ready!" );
+  //
+  //       // led
+  //       ledRGB(255,255,255,255);
+  //
+  //       // update interval
+  //       updateInterval = updateIntervalReady;
+  //
+  //     } else {
+  //
+  //
+  //       Serial.println( "" );
+  //       Serial.println( "====== TEMP INFO ======" );
+  //
+  //       // bed
+  //       Serial.print("bedActual: ");
+  //       Serial.println( bedActual );
+  //       Serial.print("bedTarget: ");
+  //       Serial.println( bedTarget );
+  //
+  //       Serial.println( "" );
+  //
+  //       // tool
+  //       Serial.print("toolActual: ");
+  //       Serial.println( toolActual );
+  //       Serial.print("toolTarget: ");
+  //       Serial.println( toolTarget );
+  //       Serial.println( "====== TEMP INFO ======" );
+  //       Serial.println( "" );
+  //
+  //       checkPrinterState();
+  //     }
+  //
+  //   }
+  //
+  //
+  //
+  //
+  // }
+  // // restart
+  // else {
+  //   ESP.restart();
+  // }
+  //
+  //       ledStatus( printerProgress );
+  //
+  // // delay requests
+  // Serial.println( "" );
+  // Serial.print( "Next update in: " );
+  // Serial.print( updateInterval / 1000 );
+  // Serial.println( "s" );
+  // Serial.println( "===================================" );
+  // Serial.println("");
+  // delay( updateInterval );
 
 
 }
@@ -423,12 +437,20 @@ void getPrinterJob() {
     JsonObject& parsed = jsonBuffer.parseObject(http.getString());
 
     // lvl 1
+    JsonObject& job = parsed["job"];
+    JsonObject& file = job["file"];
+
+    // lvl 1
     JsonObject& progress = parsed["progress"];
 
+	filename = file["name"];
+    timeNow = progress["printTime"];
+    timeLeft = progress["printTimeLeft"];
     printerProgress = progress["completion"];
 
     Serial.print("Progress: ");
     Serial.println( printerProgress );
+    Serial.println( filename );
 
 
 

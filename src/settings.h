@@ -1,9 +1,9 @@
 // LED
 // ====================================================================
-#define LED_PIN D7
-#define LED_PIXEL 16
+#define LED_PIN D3
+#define LED_PIXEL 2
 
-#define LED_PIN_STATUS D8
+#define LED_PIN_STATUS D7
 #define LED_PIXEL_STATUS 16
 
 // OCTOPRINT

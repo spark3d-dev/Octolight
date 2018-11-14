@@ -25,7 +25,6 @@ class Status
   void clearDisplay( void );                    // clears the display screen
   void bootscreen( void );                      // show bootscreen
   void actStatus( int timeNow, int timeLeft, int progress, String filename, double bedActual, double toolActual );                       // display the actual status
-  void apEnabled();
 
 };
 

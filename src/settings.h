@@ -8,6 +8,10 @@
 
 // OCTOPRINT
 // ====================================================================
+// ender5
+// const char* octo_api_key    = "A3C2BC6C45A54E45BC85FBC9F96BB441";
+// String octo_ip_adr          = "qncontrol.kuhnsches.de:8888";
+// ender3
 const char* octo_api_key    = "F77590E598BE45838BE5328DFEFAEF82";
 String octo_ip_adr          = "qncontrol.kuhnsches.de:5555";
 // String octo_ip_adr          = "192.168.1.66";
